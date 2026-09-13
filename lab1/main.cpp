@@ -8,18 +8,19 @@ int main() {
     std::size_t rows = 0;
     std::size_t cols = 0;
 
-    int option = -1;
+    int option = 0;
     while (true) {
+        option = 0;
         std::cout << "\nCommands\n"
                   << "1. Create matrix\n"
                   << "2. Fill matrix\n"
                   << "3. Print matrix\n"
                   << "4. Max row array/min col array\n"
-                  << "5. Exit\n"
+                  << "0. Exit\n"
                   << ": ";
         std::cin >> option;
 
-        if (option == 5) {
+        if (option == 0) {
             if (m) {
                 matrix_delete(m, rows);
             }
