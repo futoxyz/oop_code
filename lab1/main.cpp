@@ -18,7 +18,12 @@ int main() {
                   << "4. Max row array/min col array\n"
                   << "0. Exit\n"
                   << ": ";
-        std::cin >> option;
+
+        if (!(std::cin >> option)) {
+        std::cout << "Invalid input\n";
+        std::cin.clear();
+        continue;
+        }
 
         if (option == 0) {
             if (m) {
