@@ -35,12 +35,13 @@ void matrix_print(const int *const *m, std::size_t rows, std::size_t cols) {
 }
 
 
-void matrix_delete(int **m, std::size_t rows) {
+void matrix_delete(int **&m, std::size_t rows) {
     if (!m || rows == 0) return;
     for (std::size_t i = 0; i < rows; i++) {
         delete[] m[i];
     }
     delete[] m;
+    m = nullptr;
 }
 
 

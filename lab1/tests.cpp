@@ -16,6 +16,7 @@ TEST(matrix, deleting) {
     int **m = matrix_create(5, 3);
     ASSERT_NE(m, nullptr);
     matrix_delete(m, 5);
+    EXPECT_EQ(m, nullptr);
 }
 
 TEST(matrix, deleting_empty) {
