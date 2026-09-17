@@ -6,17 +6,9 @@
 namespace matrix_ops {
 int **matrix_create(std::size_t rows, std::size_t cols) {
     if (rows == 0 || cols == 0) return nullptr;
-    int **m = new (std::nothrow) int*[rows]{};
-    if (!m) return nullptr;
+    int **m = new int*[rows]{};
     for (std::size_t i = 0; i < rows; i++) {
-        m[i] = new (std::nothrow) int[cols]{};
-        if (!m[i]) {
-            for (std::size_t j = 0; j < i; j++) {
-                delete[] m[j];
-            }
-            delete[] m;
-            return nullptr;
-        }
+        m[i] = new int[cols]{};
     }
     return m;
 }
@@ -54,8 +46,7 @@ void matrix_delete(int **m, std::size_t rows) {
 
 int *matrix_row_max(const int* const* m, std::size_t rows, std::size_t cols) {
     if (!m || rows == 0 || cols == 0) return nullptr;
-    int *row_max = new (std::nothrow) int[rows];
-    if (!row_max) return nullptr;
+    int *row_max = new int[rows];
     for (std::size_t i = 0; i < rows; i++) {
         row_max[i] = m[i][0];
         if (cols > 1) {
@@ -72,8 +63,7 @@ int *matrix_row_max(const int* const* m, std::size_t rows, std::size_t cols) {
 
 int *matrix_col_min(const int* const* m, size_t rows, size_t cols) {
     if (!m || rows == 0 || cols == 0) return nullptr;
-    int *col_min = new (std::nothrow) int[cols];
-    if (!col_min) return nullptr;
+    int *col_min = new int[cols];
     for (std::size_t i = 0; i < cols; i++) {
         col_min[i] = m[0][i];
         if (rows > 1) {
