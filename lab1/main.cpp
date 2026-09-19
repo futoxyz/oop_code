@@ -20,9 +20,10 @@ int main() {
                   << ": ";
 
         if (!(std::cin >> option)) {
-        std::cout << "Invalid input\n";
-        std::cin.clear();
-        continue;
+            std::cout << "Invalid input\n";
+            std::cin.clear();
+            if (m) matrix_delete(m, rows);
+            return 0;
         }
 
         if (option == 0) {
@@ -32,7 +33,7 @@ int main() {
             break;
         }
 
-        if (option != 1 && !m) {
+        if (option != 1 && option < 5 && !m) {
             std::cout << "Matrix is not created\n";
             continue;
         }

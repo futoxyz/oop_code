@@ -6,10 +6,24 @@
 namespace matrix_ops {
 int **matrix_create(std::size_t rows, std::size_t cols) {
     if (rows == 0 || cols == 0) return nullptr;
-    int **m = new int*[rows]{};
-    for (std::size_t i = 0; i < rows; i++) {
-        m[i] = new int[cols]{};
+
+    int **m = nullptr;
+    try {
+        m = new int*[rows]{};
+        for (std::size_t i = 0; i < rows; i++) {
+            m[i] = new int[cols]{};
+        }
+    } catch (const std::bad_alloc &) {
+        if (m) {
+            for (std::size_t j = 0; j < rows; j++) {
+                delete[] m[j];
+            }
+            delete[] m;
+            m = nullptr;
+        }
+        return nullptr;
     }
+
     return m;
 }
 
@@ -36,7 +50,7 @@ void matrix_print(const int *const *m, std::size_t rows, std::size_t cols) {
 
 
 void matrix_delete(int **&m, std::size_t rows) {
-    if (!m || rows == 0) return;
+    if (!m) return;
     for (std::size_t i = 0; i < rows; i++) {
         delete[] m[i];
     }
@@ -44,34 +58,42 @@ void matrix_delete(int **&m, std::size_t rows) {
     m = nullptr;
 }
 
-
 int *matrix_row_max(const int* const* m, std::size_t rows, std::size_t cols) {
     if (!m || rows == 0 || cols == 0) return nullptr;
-    int *row_max = new int[rows];
+
+    int *row_max = nullptr;
+    try {
+        row_max = new int[rows];
+    } catch (const std::bad_alloc &) {
+        return nullptr;
+    }
+
     for (std::size_t i = 0; i < rows; i++) {
         row_max[i] = m[i][0];
-        if (cols > 1) {
-            for (std::size_t j = 1; j < cols; j++) {
-                if (m[i][j] > row_max[i]) {
-                    row_max[i] = m[i][j];
-                }
+        for (std::size_t j = 1; j < cols; j++) {
+            if (m[i][j] > row_max[i]) {
+                row_max[i] = m[i][j];
             }
         }
     }
     return row_max;
 }
 
-
-int *matrix_col_min(const int* const* m, size_t rows, size_t cols) {
+int *matrix_col_min(const int* const* m, std::size_t rows, std::size_t cols) {
     if (!m || rows == 0 || cols == 0) return nullptr;
-    int *col_min = new int[cols];
+
+    int *col_min = nullptr;
+    try {
+        col_min = new int[cols];
+    } catch (const std::bad_alloc &) {
+        return nullptr;
+    }
+
     for (std::size_t i = 0; i < cols; i++) {
         col_min[i] = m[0][i];
-        if (rows > 1) {
-            for (std::size_t j = 1; j < rows; j++) {
-                if (m[j][i] < col_min[i]) {
-                    col_min[i] = m[j][i];
-                }
+        for (std::size_t j = 1; j < rows; j++) {
+            if (m[j][i] < col_min[i]) {
+                col_min[i] = m[j][i];
             }
         }
     }
