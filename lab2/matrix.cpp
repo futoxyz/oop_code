@@ -86,7 +86,8 @@ Matrix Matrix::pow(std::size_t n) const {
 }
 
 Matrix diag_pow(const Matrix &a, std::size_t n) {
-    if (a.cols() != a.rows() || a.cols() != 2) return a;
+    if (a.cols() != a.rows() || a.cols() == 0) return a;
+    if (a.cols() != 2) return a.pow(n);
 
     double a11 = a.get(1, 1);
     double a12 = a.get(1, 2);
@@ -103,7 +104,7 @@ Matrix diag_pow(const Matrix &a, std::size_t n) {
     double trace = a11 + a22;
     double det = a11 * a22 - a12 * a21;
     double d = trace * trace - 4 * det;
-    if (d <= 0) return a; 
+    if (d <= 0) return a.pow(n); 
     double sqrt_d = std::sqrt(d);
     double lambda1 = (trace + sqrt_d) / 2.0;
     double lambda2 = (trace - sqrt_d) / 2.0;
@@ -122,7 +123,7 @@ Matrix diag_pow(const Matrix &a, std::size_t n) {
     }
     
     double det_S = S.get(1, 1) * S.get(2, 2) - S.get(1, 2) * S.get(2, 1);
-    if (std::abs(det_S) < 1e-9) return a;
+    if (std::abs(det_S) < 1e-9) return a.pow(n);
     
     Matrix S_inv(2, 2, 0.0);
     S_inv.set(1, 1,  S.get(2, 2) / det_S);
