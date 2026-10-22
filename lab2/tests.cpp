@@ -9,7 +9,7 @@ TEST(matrix_test, create_get) {
     ASSERT_EQ(m.cols(), 2);
     for (std::size_t i = 1; i <= 3; i++) {
         for (std::size_t j = 1; j <= 2; j++) {
-            ASSERT_DOUBLE_EQ(m.get(i, j), -3.75);
+            ASSERT_EQ(m.get(i, j), -3.75);
         }
     }
 }
