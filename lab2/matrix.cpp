@@ -53,7 +53,7 @@ Matrix Matrix::mul(const Matrix &b) const {
     Matrix result(this->rows_, b.cols(), 0);
     for (std::size_t i = 1; i <= this->rows_; i++) {
         for (std::size_t j = 1; j <= b.cols(); j++) {
-            double sum = 0.0;
+            double sum = 0;
             for (std::size_t k = 1; k <= this->cols_; k++) {
                 sum += this->get(i, k) * b.get(k, j);
             }
@@ -86,6 +86,7 @@ Matrix Matrix::pow(std::size_t n) const {
 }
 
 Matrix diag_pow(const Matrix &a, std::size_t n) {
+    double eps = 1e-9;
     if (a.cols() != a.rows() || a.cols() == 0) return a;
     if (a.cols() != 2) return a.pow(n);
 
@@ -94,8 +95,8 @@ Matrix diag_pow(const Matrix &a, std::size_t n) {
     double a21 = a.get(2, 1);
     double a22 = a.get(2, 2);
 
-    if (a12 == 0 && a21 == 0) {
-        Matrix res(2, 2, 0.0);
+    if (std::abs(a12) <= eps && std::abs(a21) <= eps) {
+        Matrix res(2, 2, 0);
         res.set(1, 1, std::pow(a11, n));
         res.set(2, 2, std::pow(a22, n));
         return res;
@@ -104,26 +105,26 @@ Matrix diag_pow(const Matrix &a, std::size_t n) {
     double trace = a11 + a22;
     double det = a11 * a22 - a12 * a21;
     double d = trace * trace - 4 * det;
-    if (d <= 0) return a.pow(n); 
+    if (d <= eps) return a.pow(n);
     double sqrt_d = std::sqrt(d);
     double lambda1 = (trace + sqrt_d) / 2.0;
     double lambda2 = (trace - sqrt_d) / 2.0;
     
-    Matrix diag(2, 2, 0.0);
+    Matrix diag(2, 2, 0);
     diag.set(1, 1, std::pow(lambda1, n));
     diag.set(2, 2, std::pow(lambda2, n));
     
-    Matrix S(2, 2, 0.0);
-    if (a12 != 0) {
+    Matrix S(2, 2, 0);
+    if (std::abs(a12) > eps) {
         S.set(1, 1, lambda1 - a22); S.set(1, 2, lambda2 - a22);
         S.set(2, 1, a21);           S.set(2, 2, a21);
-    } else if (a21 != 0) {
+    } else if (std::abs(a21) > eps) {
         S.set(1, 1, a12);           S.set(1, 2, a12);
         S.set(2, 1, lambda1 - a11); S.set(2, 2, lambda2 - a11);
     }
     
     double det_S = S.get(1, 1) * S.get(2, 2) - S.get(1, 2) * S.get(2, 1);
-    if (std::abs(det_S) < 1e-9) return a.pow(n);
+    if (std::abs(det_S) < eps) return a.pow(n);
     
     Matrix S_inv(2, 2, 0.0);
     S_inv.set(1, 1,  S.get(2, 2) / det_S);
