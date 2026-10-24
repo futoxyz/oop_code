@@ -66,14 +66,14 @@ std::size_t TemperatureSet::indexOf(const Temperature& t) const {
     return size_;
 }
 
-void TemperatureSet::growIfFull() {
+void TemperatureSet::increase() {
     if (size_ < capacity_) {
         return;
     }
     const std::size_t newCapacity = (capacity_ == 0) ? 1 : capacity_ * 2;
     Temperature* newData = new Temperature[newCapacity];
     for (std::size_t i = 0; i < size_; ++i) {
-        newData[i] = data_[i];
+    newData[i] = data_[i];
     }
     delete[] data_;
     data_ = newData;
@@ -84,7 +84,7 @@ bool TemperatureSet::add(const Temperature& t) {
     if (indexOf(t) != size_) {
         return false;
     }
-    growIfFull();
+    increase();
     data_[size_++] = t;
     return true;
 }

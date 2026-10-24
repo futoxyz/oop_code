@@ -38,7 +38,7 @@ public:
 
 private:
     std::size_t indexOf(const Temperature& t) const;
-    void growIfFull();
+    void increase();
     Temperature* data_;
     std::size_t size_;
     std::size_t capacity_;
