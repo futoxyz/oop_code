@@ -1,14 +1,12 @@
 #include "temperature.h"
-
 #include <cmath>
 #include <iostream>
 
-namespace {
-constexpr double absoluteZero = 273.15;
-}
 
 Temperature::Temperature()
-    : kelvin_(absoluteZero) {}
+    : kelvin_(zero_) {
+}
+
 
 Temperature::Temperature(double value, TempUnit unit)
     : kelvin_(toKelvin(value, unit)) {}
@@ -16,21 +14,21 @@ Temperature::Temperature(double value, TempUnit unit)
 double Temperature::toKelvin(double value, TempUnit unit) {
     switch (unit) {
         case TempUnit::Celsius:
-            return value + absoluteZero;
+            return value + zero_;
         case TempUnit::Fahrenheit:
-            return (value - 32.0) * 5.0 / 9.0 + absoluteZero;
+            return (value - 32.0) * 5.0 / 9.0 + zero_;
         case TempUnit::Kelvin:
             return value;
     }
-    return value;  // недостижимо; защита от предупреждений компилятора
+    return value;
 }
 
 double Temperature::fromKelvin(double kelvin, TempUnit unit) {
     switch (unit) {
         case TempUnit::Celsius:
-            return kelvin - absoluteZero;
+            return kelvin - zero_;
         case TempUnit::Fahrenheit:
-            return (kelvin - absoluteZero) * 9.0 / 5.0 + 32.0;
+            return (kelvin - zero_) * 9.0 / 5.0 + 32.0;
         case TempUnit::Kelvin:
             return kelvin;
     }
@@ -53,7 +51,6 @@ bool Temperature::operator!=(const Temperature& other) const {
     return !(*this == other);
 }
 
-// Печатаем в канонической единице: "273.15 K".
 std::ostream& operator<<(std::ostream& os, const Temperature& t) {
     return os << t.kelvin_ << " K";
 }

@@ -5,7 +5,7 @@
 TemperatureSet::TemperatureSet()
     : data_(nullptr), size_(0), capacity_(0) {}
 
-// Глубокая копия: новый массив ровно под size_ элементов.
+
 TemperatureSet::TemperatureSet(const TemperatureSet& other)
     : data_(nullptr), size_(0), capacity_(0) {
     if (other.size_ > 0) {
@@ -25,7 +25,7 @@ TemperatureSet::TemperatureSet(TemperatureSet&& other) noexcept
     other.capacity_ = 0;
 }
 
-// copy-and-swap: сильная гарантия, самоприсваивание безопасно.
+
 TemperatureSet& TemperatureSet::operator=(const TemperatureSet& other) {
     if (this != &other) {
         TemperatureSet tmp(other);
@@ -59,7 +59,7 @@ void TemperatureSet::swap(TemperatureSet& other) noexcept {
 
 std::size_t TemperatureSet::indexOf(const Temperature& t) const {
     for (std::size_t i = 0; i < size_; ++i) {
-        if (data_[i] == t) {  // Temperature::operator== — через эпсилон
+        if (data_[i] == t) {
             return i;
         }
     }
@@ -89,7 +89,7 @@ bool TemperatureSet::add(const Temperature& t) {
     return true;
 }
 
-// Удаление сдвигом: порядок остальных элементов сохраняется.
+
 bool TemperatureSet::remove(const Temperature& t) {
     const std::size_t idx = indexOf(t);
     if (idx == size_) {
@@ -156,8 +156,6 @@ TemperatureSet TemperatureSet::operator-(const TemperatureSet& other) const {
     return result;
 }
 
-// Равенство как множеств: порядок не важен.
-// Элементы уникальны, поэтому достаточно равенства размеров и вложения.
 bool TemperatureSet::operator==(const TemperatureSet& other) const {
     if (size_ != other.size_) {
         return false;
@@ -174,7 +172,6 @@ bool TemperatureSet::operator!=(const TemperatureSet& other) const {
     return !(*this == other);
 }
 
-// Формат: { 273.15 K, 300 K }, пустое — { }. Порядок хранения.
 std::ostream& operator<<(std::ostream& os, const TemperatureSet& s) {
     os << "{ ";
     for (std::size_t i = 0; i < s.size_; ++i) {
