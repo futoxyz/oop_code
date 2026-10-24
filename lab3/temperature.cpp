@@ -3,13 +3,8 @@
 #include <iostream>
 
 
-Temperature::Temperature()
-    : kelvin_(zero_) {
-}
-
-
-Temperature::Temperature(double value, TempUnit unit)
-    : kelvin_(toKelvin(value, unit)) {}
+Temperature::Temperature(): kelvin_(zero_), unit_(TempUnit::K) {}
+Temperature::Temperature(double value, TempUnit unit): kelvin_(toKelvin(value, unit)), unit_(unit) {}
 
 double Temperature::toKelvin(double value, TempUnit unit) {
     switch (unit) {
@@ -52,5 +47,13 @@ bool Temperature::operator!=(const Temperature& other) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Temperature& t) {
+    switch (t.unit_) {
+        case TempUnit::K:
+            return os << t.in(TempUnit::K) << " K";
+        case TempUnit::C:
+            return os << t.in(TempUnit::C) << " C";
+        case TempUnit::F:
+            return os << t.in(TempUnit::F) << " F";
+    }
     return os << t.kelvin_ << " K";
 }

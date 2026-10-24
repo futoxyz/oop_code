@@ -27,4 +27,5 @@ private:
     static double toKelvin(double value, TempUnit unit);
     static double fromKelvin(double kelvin, TempUnit unit);
     double kelvin_;
+    TempUnit unit_;
 };
