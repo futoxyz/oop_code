@@ -13,11 +13,11 @@ Temperature::Temperature(double value, TempUnit unit)
 
 double Temperature::toKelvin(double value, TempUnit unit) {
     switch (unit) {
-        case TempUnit::Celsius:
+        case TempUnit::C:
             return value + zero_;
-        case TempUnit::Fahrenheit:
+        case TempUnit::F:
             return (value - 32.0) * 5.0 / 9.0 + zero_;
-        case TempUnit::Kelvin:
+        case TempUnit::K:
             return value;
     }
     return value;
@@ -25,11 +25,11 @@ double Temperature::toKelvin(double value, TempUnit unit) {
 
 double Temperature::fromKelvin(double kelvin, TempUnit unit) {
     switch (unit) {
-        case TempUnit::Celsius:
+        case TempUnit::C:
             return kelvin - zero_;
-        case TempUnit::Fahrenheit:
+        case TempUnit::F:
             return (kelvin - zero_) * 9.0 / 5.0 + 32.0;
-        case TempUnit::Kelvin:
+        case TempUnit::K:
             return kelvin;
     }
     return kelvin;

@@ -4,9 +4,9 @@
 
 
 enum class TempUnit {
-    Celsius,
-    Fahrenheit,
-    Kelvin
+    C,
+    F,
+    K
 };
 
 class Temperature {
