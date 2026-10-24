@@ -4,9 +4,7 @@
 
 
 enum class TempUnit {
-    C,
-    F,
-    K
+    C, F, K
 };
 
 class Temperature {
