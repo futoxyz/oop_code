@@ -8,24 +8,24 @@ enum class TempUnit {
 };
 
 class Temperature {
-public:
-    Temperature();
-    Temperature(double value, TempUnit unit);
+    private:
+        double kelvin_;
+        TempUnit unit_;
+        static double toKelvin(double value, TempUnit unit);
+        static double fromKelvin(double kelvin, TempUnit unit);
 
-    double kelvin() const;
-    double in(TempUnit unit) const;
+    public:
+        static constexpr double eps_ = 1e-9;
+        static constexpr double zero_ = 273.15;
 
-    bool operator==(const Temperature& other) const;
-    bool operator!=(const Temperature& other) const;
+        Temperature();
+        Temperature(double value, TempUnit unit);
 
-    friend std::ostream& operator<<(std::ostream& os, const Temperature& t);
+        double kelvin() const;
+        double in(TempUnit unit) const;
 
-    static constexpr double eps_ = 1e-9;
-    static constexpr double zero_ = 273.15;
+        bool operator==(const Temperature& other) const;
+        bool operator!=(const Temperature& other) const;
 
-private:
-    static double toKelvin(double value, TempUnit unit);
-    static double fromKelvin(double kelvin, TempUnit unit);
-    double kelvin_;
-    TempUnit unit_;
+        friend std::ostream& operator<<(std::ostream& os, const Temperature& t);
 };
