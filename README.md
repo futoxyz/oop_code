@@ -7,12 +7,14 @@
 6. ?
 
 # Building and launching
-```
+```bash
+
 # Open directory
+
 cd lab-< # number of lab
 
-# cmake -S . -B build
-# cmake --build build
+cmake -S . -B build
+cmake --build build
 
 ./build/main.exe
 ./build/tests.exe
