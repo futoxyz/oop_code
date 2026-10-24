@@ -5,3 +5,21 @@
 4. ?
 5. ?
 6. ?
+
+# Building and launching
+```
+# Open directory
+cd lab-< # number of lab
+
+# cmake -S . -B build
+# cmake --build build
+
+./build/main.exe
+./build/tests.exe
+
+# OR
+
+./build/Debug/main.exe
+./build/Debug/tests.exe
+
+```
