@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-Temperature::Temperature(): kelvin_(zero_), unit_(TempUnit::K) {}
+Temperature::Temperature(): kelvin_(0.0), unit_(TempUnit::K) {}
 Temperature::Temperature(double value, TempUnit unit): kelvin_(toKelvin(value, unit)), unit_(unit) {}
 
 double Temperature::toKelvin(double value, TempUnit unit) {
