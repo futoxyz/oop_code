@@ -1,6 +1,7 @@
 #include "temperature.h"
 #include <cmath>
 #include <iostream>
+#include <compare>
 
 
 Temperature::Temperature(): kelvin_(0.0), unit_(TempUnit::K) {}
@@ -45,6 +46,22 @@ bool Temperature::operator==(const Temperature& other) const {
 bool Temperature::operator!=(const Temperature& other) const {
     return !(*this == other);
 }
+
+bool Temperature::operator>(const Temperature& other) const {
+    return kelvin_ - other.kelvin_ > eps_;
+}
+
+bool Temperature::operator<(const Temperature& other) const {
+    return other > *this;
+}
+bool Temperature::operator>=(const Temperature& other) const {
+    return (*this > other || *this == other);
+}
+
+bool Temperature::operator<=(const Temperature& other) const {
+    return (*this < other || *this == other);
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Temperature& t) {
     switch (t.unit_) {

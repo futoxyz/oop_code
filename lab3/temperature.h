@@ -1,6 +1,7 @@
 #include <cstddef>
 #pragma once
 #include <iosfwd>
+#include <compare>
 
 
 enum class TempUnit {
@@ -26,6 +27,10 @@ class Temperature {
 
         bool operator==(const Temperature& other) const;
         bool operator!=(const Temperature& other) const;
+        bool operator>(const Temperature& other) const;
+        bool operator<(const Temperature& other) const;
+        bool operator>=(const Temperature& other) const;
+        bool operator<=(const Temperature& other) const;
 
         friend std::ostream& operator<<(std::ostream& os, const Temperature& t);
 };
