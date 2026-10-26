@@ -73,7 +73,7 @@ void TemperatureSet::increase() {
     const std::size_t newCapacity = (capacity_ == 0) ? 1 : capacity_ * 2;
     Temperature* newData = new Temperature[newCapacity];
     for (std::size_t i = 0; i < size_; ++i) {
-    newData[i] = data_[i];
+        newData[i] = data_[i];
     }
     delete[] data_;
     data_ = newData;
