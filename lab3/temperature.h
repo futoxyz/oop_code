@@ -34,3 +34,7 @@ class Temperature {
 
         friend std::ostream& operator<<(std::ostream& os, const Temperature& t);
 };
+
+Temperature C(double v);
+Temperature F(double v);
+Temperature K(double v);

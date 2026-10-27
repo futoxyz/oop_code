@@ -74,3 +74,7 @@ std::ostream& operator<<(std::ostream& os, const Temperature& t) {
     }
     return os << t.kelvin_ << " K";
 }
+
+Temperature C(double v) { return Temperature(v, TempUnit::C); }
+Temperature F(double v) { return Temperature(v, TempUnit::F); }
+Temperature K(double v) { return Temperature(v, TempUnit::K); }

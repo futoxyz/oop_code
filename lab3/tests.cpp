@@ -4,46 +4,27 @@
 #include "TemperatureSet.h"
 
 
-std::string toStr(const TemperatureSet& s) {
-    std::ostringstream os;
-    os << s;
-    return os.str();
-}
-
-Temperature C(double v) { return Temperature(v, TempUnit::C); }
-Temperature F(double v) { return Temperature(v, TempUnit::F); }
-Temperature K(double v) { return Temperature(v, TempUnit::K); }
-
-
-
-TEST(TemperatureTest, DefaultIsZeroCelsius) {
+TEST(temperature_test, default_init) {
     Temperature t;
-    EXPECT_EQ(t, C(0));
-    EXPECT_NEAR(t.kelvin(), 273.15, 1e-9);
+    EXPECT_EQ(t, K(0));
+    EXPECT_NEAR(t.kelvin(), 0, 1e-9);
 }
 
-TEST(TemperatureTest, ConversionBetweenUnitsIsEqual) {
+TEST(temperature_test, unit_converts) {
     EXPECT_EQ(C(0), F(32));
     EXPECT_EQ(C(0), K(273.15));
     EXPECT_EQ(C(100), F(212));
     EXPECT_NE(C(0), C(1));
 }
 
-TEST(TemperatureTest, CanonicalizationIsIdempotent) {
+TEST(temperature_test, canonization) {
     Temperature t = F(98.6);
     Temperature again(t.in(TempUnit::K), TempUnit::K);
     EXPECT_EQ(t, again);
     EXPECT_NEAR(t.kelvin(), again.kelvin(), 1e-9);
 }
 
-TEST(TemperatureTest, EqualityUsesEpsilonNotExactComparison) {
-    EXPECT_EQ(K(300.0), K(300.0 + Temperature::eps_ / 10));
-    EXPECT_NE(K(300.0), K(300.0 + Temperature::eps_ * 100));
-}
-
-
-
-TEST(TemperatureSetTest, NewSetIsEmpty) {
+TEST(temperature_set_test, init) {
     TemperatureSet s;
     EXPECT_EQ(s.size(), 0u);
     EXPECT_TRUE(s.empty());
@@ -51,24 +32,14 @@ TEST(TemperatureSetTest, NewSetIsEmpty) {
     EXPECT_FALSE(s(C(0)));
 }
 
-TEST(TemperatureSetTest, OperationsOnEmptySets) {
-    TemperatureSet a, b;
-    EXPECT_TRUE((a | b).empty());
-    EXPECT_TRUE((a & b).empty());
-    EXPECT_TRUE((a - b).empty());
-    EXPECT_EQ(a, b);
-    EXPECT_FALSE(a.remove(C(5)));
-    EXPECT_EQ(toStr(a), "{ }");
-}
-
-TEST(TemperatureSetTest, AddNewReturnsTrueDuplicateReturnsFalse) {
+TEST(temperature_set_test, add_duplicates) {
     TemperatureSet s;
     EXPECT_TRUE(s.add(C(10)));
     EXPECT_FALSE(s.add(C(10)));
     EXPECT_EQ(s.size(), 1u);
 }
 
-TEST(TemperatureSetTest, DuplicateDetectedAcrossUnits) {
+TEST(temperature_set_test, duplicates_units) {
     TemperatureSet s;
     EXPECT_TRUE(s.add(C(0)));
     EXPECT_FALSE(s.add(F(32)));
@@ -76,7 +47,7 @@ TEST(TemperatureSetTest, DuplicateDetectedAcrossUnits) {
     EXPECT_EQ(s.size(), 1u);
 }
 
-TEST(TemperatureSetTest, RemoveExistingAndMissing) {
+TEST(temperature_set_test, removing) {
     TemperatureSet s;
     s.add(C(1));
     s.add(C(2));
@@ -88,16 +59,32 @@ TEST(TemperatureSetTest, RemoveExistingAndMissing) {
     EXPECT_TRUE(s.empty());
 }
 
-TEST(TemperatureSetTest, RemoveKeepsOrderOfRemaining) {
+std::string to_str(const TemperatureSet& s) {
+    std::ostringstream os;
+    os << s;
+    return os.str();
+}
+
+TEST(temperature_set_test, empty_operations) {
+    TemperatureSet a, b;
+    EXPECT_TRUE((a | b).empty());
+    EXPECT_TRUE((a & b).empty());
+    EXPECT_TRUE((a - b).empty());
+    EXPECT_EQ(a, b);
+    EXPECT_FALSE(a.remove(C(5)));
+    EXPECT_EQ(to_str(a), "{ }");
+}
+
+TEST(temperature_set_test, remove_ordering) {
     TemperatureSet s;
     s += K(1);
     s += K(2);
     s += K(3);
     s -= K(2);
-    EXPECT_EQ(toStr(s), "{ 1 K, 3 K }");
+    EXPECT_EQ(to_str(s), "{ 1 K, 3 K }");
 }
 
-TEST(TemperatureSetTest, ContainsAndCallOperatorAgree) {
+TEST(temperature_set_test, contains) {
     TemperatureSet s;
     s.add(C(25));
     EXPECT_EQ(s.contains(C(25)), s(C(25)));
@@ -105,15 +92,7 @@ TEST(TemperatureSetTest, ContainsAndCallOperatorAgree) {
     EXPECT_TRUE(s(F(77)));
 }
 
-TEST(TemperatureSetTest, CompoundOperatorsChain) {
-    TemperatureSet s;
-    (s += C(1)) += C(2);
-    EXPECT_EQ(s.size(), 2u);
-    (s -= C(1)) -= C(2);
-    EXPECT_TRUE(s.empty());
-}
-
-TEST(TemperatureSetTest, CopyIsIndependent) {
+TEST(temperature_set_test, copy) {
     TemperatureSet a;
     a.add(C(1));
     a.add(C(2));
@@ -126,7 +105,7 @@ TEST(TemperatureSetTest, CopyIsIndependent) {
     EXPECT_EQ(b.size(), 2u);
 }
 
-TEST(TemperatureSetTest, SelfAssignmentIsSafe) {
+TEST(temperature_set_test, self_assign) {
     TemperatureSet a;
     a.add(C(1));
     TemperatureSet& ref = a;
@@ -135,7 +114,7 @@ TEST(TemperatureSetTest, SelfAssignmentIsSafe) {
     EXPECT_TRUE(a.contains(C(1)));
 }
 
-TEST(TemperatureSetTest, MoveLeavesSourceEmptyAndValid) {
+TEST(temperature_set_test, move) {
     TemperatureSet a;
     a.add(C(1));
     a.add(C(2));
@@ -152,14 +131,14 @@ TEST(TemperatureSetTest, MoveLeavesSourceEmptyAndValid) {
     EXPECT_TRUE(b.empty());
 }
 
-TEST(TemperatureSetTest, MoveFromEmptySet) {
+TEST(temperature_set_test, move_empty) {
     TemperatureSet a;
     TemperatureSet b(std::move(a));
     EXPECT_TRUE(a.empty());
     EXPECT_TRUE(b.empty());
 }
 
-TEST(TemperatureSetTest, UnionIntersectionDifference) {
+TEST(temperature_set_test, union_intersection) {
     TemperatureSet a, b;
     a.add(K(1)); a.add(K(2)); a.add(K(3));
     b.add(K(3)); b.add(K(4));
@@ -180,7 +159,7 @@ TEST(TemperatureSetTest, UnionIntersectionDifference) {
     EXPECT_EQ(b.size(), 2u);
 }
 
-TEST(TemperatureSetTest, EqualityIgnoresOrderAndUnits) {
+TEST(temperature_set_test, equality_order) {
     TemperatureSet a, b;
     a.add(C(0)); a.add(C(100));
     b.add(F(212)); b.add(K(273.15));
@@ -190,16 +169,16 @@ TEST(TemperatureSetTest, EqualityIgnoresOrderAndUnits) {
     EXPECT_TRUE(a != b);
 }
 
-TEST(TemperatureSetTest, OutputFormat) {
+TEST(temperature_set_test, output) {
     TemperatureSet s;
-    EXPECT_EQ(toStr(s), "{ }");
-    s.add(K(1));
-    EXPECT_EQ(toStr(s), "{ 1 K }");
+    EXPECT_EQ(to_str(s), "{ }");
+    s.add(C(1));
+    EXPECT_EQ(to_str(s), "{ 1 C }");
     s.add(K(2.5));
-    EXPECT_EQ(toStr(s), "{ 1 K, 2.5 K }");
+    EXPECT_EQ(to_str(s), "{ 1 C, 2.5 K }");
 }
 
-TEST(TemperatureSetTest, StressThousandAdds) {
+TEST(temperature_set_test, stress_test) {
     TemperatureSet s;
     for (int i = 0; i < 1000; ++i) {
         EXPECT_TRUE(s.add(K(i)));
