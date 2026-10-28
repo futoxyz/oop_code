@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <compare>
+#include <string>
 
 
 Temperature::Temperature(): kelvin_(0.0), unit_(TempUnit::K) {}
