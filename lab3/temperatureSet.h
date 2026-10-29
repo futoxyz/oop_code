@@ -12,7 +12,7 @@ public:
     TemperatureSet(TemperatureSet&& other) noexcept;
     TemperatureSet& operator=(const TemperatureSet& other);
     TemperatureSet& operator=(TemperatureSet&& other) noexcept;
-    ~TemperatureSet();
+    ~TemperatureSet() noexcept;
 
     bool add(const Temperature& t);
     bool remove(const Temperature& t);

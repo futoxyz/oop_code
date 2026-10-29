@@ -47,8 +47,9 @@ TemperatureSet& TemperatureSet::operator=(TemperatureSet&& other) noexcept {
     return *this;
 }
 
-TemperatureSet::~TemperatureSet() {
+TemperatureSet::~TemperatureSet() noexcept {
     delete[] data_;
+    data_ = nullptr;
 }
 
 void TemperatureSet::swap(TemperatureSet& other) noexcept {
