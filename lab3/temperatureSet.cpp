@@ -103,10 +103,6 @@ bool TemperatureSet::contains(const Temperature& t) const {
     return indexOf(t) != size_;
 }
 
-bool TemperatureSet::operator()(const Temperature& t) const {
-    return contains(t);
-}
-
 std::size_t TemperatureSet::size() const {
     return size_;
 }

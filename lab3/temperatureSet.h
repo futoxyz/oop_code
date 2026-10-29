@@ -17,7 +17,6 @@ public:
     bool add(const Temperature& t);
     bool remove(const Temperature& t);
     bool contains(const Temperature& t) const;
-    bool operator()(const Temperature& t) const;
 
     std::size_t size() const;
     bool empty() const;
