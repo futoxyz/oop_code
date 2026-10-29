@@ -29,7 +29,9 @@ TemperatureSet::TemperatureSet(TemperatureSet&& other) noexcept
 TemperatureSet& TemperatureSet::operator=(const TemperatureSet& other) {
     if (this != &other) {
         TemperatureSet tmp(other);
-        swap(tmp);
+        std::swap(data_, tmp.data_);
+        std::swap(size_, tmp.size_);
+        std::swap(capacity_, tmp.capacity_);
     }
     return *this;
 }
@@ -50,12 +52,6 @@ TemperatureSet& TemperatureSet::operator=(TemperatureSet&& other) noexcept {
 TemperatureSet::~TemperatureSet() noexcept {
     delete[] data_;
     data_ = nullptr;
-}
-
-void TemperatureSet::swap(TemperatureSet& other) noexcept {
-    std::swap(data_, other.data_);
-    std::swap(size_, other.size_);
-    std::swap(capacity_, other.capacity_);
 }
 
 std::size_t TemperatureSet::indexOf(const Temperature& t) const {
