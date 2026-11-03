@@ -4,15 +4,12 @@
 #include <string>
 
 
-Temperature::Temperature(): kelvin_(0.0), unit_(TempUnit::K) {}
+Temperature::Temperature() : kelvin_(0.0), unit_(TempUnit::K) {}
 
-Temperature::Temperature(double value, TempUnit unit) {
-    double kelvin_value = toKelvin(value, unit);
-    if (kelvin_value < 0.0) {
-        throw std::invalid_argument("Argument temperature reached below absolute zero: " + std::to_string(kelvin_value) + " in K");
+Temperature::Temperature(double value, TempUnit unit) : kelvin_(toKelvin(value, unit)), unit_(unit)  {
+    if (kelvin_ < 0.0) {
+        throw std::invalid_argument("Argument temperature reached below absolute zero: " + std::to_string(kelvin_) + " in K");
     }
-    kelvin_ = kelvin_value;
-    unit_ = unit;
 }
 
 double Temperature::toKelvin(double value, TempUnit unit) {
