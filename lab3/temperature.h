@@ -21,6 +21,11 @@ class Temperature {
 
         Temperature();
         Temperature(double value, TempUnit unit);
+        Temperature(const Temperature& other) = default;
+        Temperature(Temperature&& other) noexcept = default;
+        Temperature& operator=(const Temperature& other) = default;
+        Temperature& operator=(Temperature&& other) noexcept = default;
+        virtual ~Temperature() noexcept = default;
 
         double kelvin() const;
         double in(TempUnit unit) const;
