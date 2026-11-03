@@ -1,7 +1,6 @@
 #include "temperature.h"
 #include <cmath>
 #include <iostream>
-#include <compare>
 #include <string>
 
 
