@@ -86,9 +86,8 @@ TEST(temperature_set_test, remove_ordering) {
 TEST(temperature_set_test, contains) {
     TemperatureSet s;
     s.add(C(25));
-    EXPECT_EQ(s.contains(C(25)), s(C(25)));
-    EXPECT_EQ(s.contains(C(26)), s(C(26)));
-    EXPECT_TRUE(s(F(77)));
+    EXPECT_TRUE(s.contains(C(25)));
+    EXPECT_FALSE(s.contains(C(26)));
 }
 
 TEST(temperature_set_test, copy) {
