@@ -9,7 +9,7 @@ FetchContent_Declare(
     GIT_TAG        v1.15.2
 )
 FetchContent_MakeAvailable(googletest)
-add_executable(main main.cpp shape.cpp shapeSet.cpp)
+# add_executable(main main.cpp shape.cpp shapeSet.cpp)
 add_executable(tests tests.cpp shape.cpp shapeSet.cpp)
 target_link_libraries(tests PRIVATE GTest::gtest_main)
 
