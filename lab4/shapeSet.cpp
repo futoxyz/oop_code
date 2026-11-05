@@ -77,7 +77,7 @@ bool ShapeSet::remove(std::size_t index) {
     if (index >= size_) {
         return false;
     }
-    delete data_[index ];
+    delete data_[index];
     for (std::size_t i = index; i + 1 < size_; ++i) {
         data_[i] = data_[i + 1];
     }
