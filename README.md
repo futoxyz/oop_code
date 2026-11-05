@@ -2,7 +2,7 @@
 1. Matrix basics and max/min values arrays in rows/cols
 2. Matrix class on dynamic arrey and pow(). Include diagonalization
 3. Temperature and TemperatureSet classes for Celcius, Kelvin, Fahrenheit
-4. ?
+4. Class for 2D lines: Circle, ellipse, sector. Includes set
 5. ?
 6. ?
 
