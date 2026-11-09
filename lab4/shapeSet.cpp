@@ -14,7 +14,7 @@ ShapeSet::ShapeSet(const ShapeSet& other)
         data_ = new Shape*[other.size_];
         capacity_ = other.size_;
         for (std::size_t i = 0; i < other.size_; ++i) {
-            data_[i] = other.data_[i];
+            data_[i] = other.data_[i] ? other.data_[i]->clone() : nullptr;
         }
         size_ = other.size_;
     }
@@ -40,6 +40,7 @@ ShapeSet& ShapeSet::operator=(const ShapeSet& other) {
 
 ShapeSet& ShapeSet::operator=(ShapeSet&& other) noexcept {
     if (this != &other) {
+        clear();
         delete[] data_;
         data_ = other.data_;
         size_ = other.size_;
@@ -116,10 +117,10 @@ const Shape& ShapeSet::at(std::size_t index) const {
     return *data_[index];
 }
 
-double ShapeSet::totalMetric() const {
+double ShapeSet::total_area() const {
     double total = 0.0;
     for (std::size_t i = 0; i < size_; ++i) {
-        total += data_[i]->metric();
+        total += data_[i]->area();
     }
     return total;
 }

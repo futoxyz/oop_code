@@ -1,23 +1,22 @@
 #include "shape.h"
 #include <cmath>
-#include <istream>
-#include <ostream>
+#include <iostream>
 #include <stdexcept>
 
 namespace {
 constexpr double pi_ = 3.1415926535897932;
 constexpr double eps_ = 1e-9;
 
-bool isValid(double x) { return std::isfinite(x) && x >= 0.0; }
+bool isValid(double x) { return std::isfinite(x) && x > - eps_; }
 }
 
 
 Shape::operator double() const {
-    return metric();
+    return area();
 }
 
 bool Shape::operator==(const Shape& other) const {
-    return std::abs(metric() - other.metric()) <= eps_;
+    return std::abs(area() - other.area()) <= eps_;
 }
 
 bool Shape::operator!=(const Shape& other) const {
@@ -45,7 +44,7 @@ Circle::Circle(double r)
     }
 }
 
-double Circle::metric() const {
+double Circle::area() const {
     return pi_ * r_ * r_;
 }
 
@@ -84,7 +83,7 @@ Ellipse::Ellipse(double a, double b)
     }
 }
 
-double Ellipse::metric() const {
+double Ellipse::area() const {
     return pi_ * a_ * b_;
 }
 
@@ -120,12 +119,15 @@ Sector::Sector()
 
 Sector::Sector(double r, double angle)
     : r_(r), angle_(angle) {
-    if (!isValid(r) || (0.0 < angle < 2 * pi_)) {
-        throw std::invalid_argument("Sector: radius must be finite and non-negative and angle must be between 0 and 2pi");
+    if (!isValid(r)) {
+        throw std::invalid_argument("Sector: radius must be finite and non-negative");
+    }
+    if (!(-eps_ < angle && angle < 2 * pi_)) {
+        throw std::invalid_argument("Sector: angle must be between 0 and 2pi");
     }
 }
 
-double Sector::metric() const {
+double Sector::area() const {
     return angle_ * r_ * r_ / 2.0;
 }
 

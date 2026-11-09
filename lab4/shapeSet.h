@@ -20,7 +20,7 @@ public:
     bool empty() const;
     Shape& at(std::size_t index);
     const Shape& at(std::size_t index) const;
-    double totalMetric() const;
+    double total_area() const;
     friend std::ostream& operator<<(std::ostream& os, const ShapeSet& s);
 
 private:

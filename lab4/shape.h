@@ -1,9 +1,10 @@
 #pragma once
+#include <iosfwd>
 
 
 class Shape {
 public:
-    virtual double metric() const = 0;
+    virtual double area() const = 0;
     virtual void print(std::ostream& out) const = 0;
     virtual void read(std::istream& in) = 0;
     virtual Shape* clone() const = 0;
@@ -26,7 +27,7 @@ class Circle : public Shape {
 public:
     Circle();
     explicit Circle(double r);
-    double metric() const override;
+    double area() const override;
     void print(std::ostream& out) const override;
     void read(std::istream& in) override;
     Shape* clone() const override;
@@ -41,7 +42,7 @@ class Ellipse : public Shape {
 public:
     Ellipse();
     Ellipse(double a, double b);
-    double metric() const override;
+    double area() const override;
     void print(std::ostream& out) const override;
     void read(std::istream& in) override;
     Shape* clone() const override;
@@ -57,7 +58,7 @@ class Sector : public Shape {
 public:
     Sector();
     Sector(double r, double angle);
-    double metric() const override;
+    double area() const override;
     void print(std::ostream& out) const override;
     void read(std::istream& in) override;
     Shape* clone() const override;
