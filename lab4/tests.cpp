@@ -1,8 +1,5 @@
 #include <gtest/gtest.h>
-#include <cmath>
-
 #include <stdexcept>
-#include <string>
 #include "ShapeSet.h"
 #include "shape.h"
 
