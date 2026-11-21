@@ -1,17 +1,20 @@
-# C++ Labs
-1. Matrix basics and max/min values arrays in rows/cols
-2. Matrix class on dynamic arrey and pow(). Include diagonalization
-3. Temperature and TemperatureSet classes for Celcius, Kelvin, Fahrenheit
-4. Class for 2D lines: Circle, ellipse, sector. Includes set
-5. ?
+# Лабораторные работы по ООП
+## Язык C++. сборщик CMake. Отчетов нет
+## Лабник: —
+# Варианты
+1. 17 (Матрицы, функция максимумов строк и минимумов столбцов)
+2. 18 (Матрицы, функция возведения в степень квадратной матрицы — влючает диагонализацию) 
+3. 13 (Температура и множество температур в 3-х единицах с канонизацией)
+4. 2 (Классы двухмерных кривых: круг, эллипс, сектор. Без доп. функций)
+5. 4 (Книги, BST по году книги)
 6. ?
 
-# Building and launching
+# Сборка и запуск
 ```bash
 
-# Open directory
+# Директория
 
-cd lab-< # number of lab
+cd lab< # номер ЛР
 
 cmake -S . -B build
 cmake --build build
@@ -19,9 +22,11 @@ cmake --build build
 ./build/main.exe
 ./build/tests.exe
 
-# OR
+# ИЛИ
 
 ./build/Debug/main.exe
 ./build/Debug/tests.exe
 
+# Для Linux/MacOS нужно добавить source перед путем к exe-шнику
 ```
+Примечание: не во всех ЛР есть main. Да и в душе не чаю че там осталось
