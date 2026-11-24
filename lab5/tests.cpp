@@ -7,6 +7,11 @@
 #include <utility>
 
 
+static_assert(!std::is_copy_constructible_v<BookTree>);
+static_assert(!std::is_copy_assignable_v<BookTree>);
+static_assert(std::is_abstract_v<Criterion>);
+static_assert(std::has_virtual_destructor_v<Criterion>);
+
 namespace {
 TEST(Book, invalid_fields) {
     EXPECT_THROW(Book(0), std::invalid_argument);
@@ -258,9 +263,4 @@ TEST(Lifetime, lock) {
     EXPECT_TRUE(weak.expired());
     EXPECT_EQ(Book::liveCount(), 0u);
 }
-
-static_assert(!std::is_copy_constructible_v<BookTree>);
-static_assert(!std::is_copy_assignable_v<BookTree>);
-static_assert(std::is_abstract_v<Criterion>);
-static_assert(std::has_virtual_destructor_v<Criterion>);
 }
