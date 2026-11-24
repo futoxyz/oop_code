@@ -3,6 +3,10 @@
 #include <memory>
 
 class Selection {
+private:
+    std::unique_ptr<std::weak_ptr<const Book>[]> data_;
+    std::size_t size_ = 0;
+    std::size_t capacity_ = 0;
 public:
     Selection() noexcept = default;
     Selection(const Selection& other);
@@ -17,10 +21,6 @@ public:
     const std::weak_ptr<const Book>& operator[](std::size_t index) const;
     void append(std::weak_ptr<const Book> book);
     void swap(Selection& other) noexcept;
-private:
-    std::unique_ptr<std::weak_ptr<const Book>[]> data_;
-    std::size_t size_ = 0;
-    std::size_t capacity_ = 0;
 };
 
 
