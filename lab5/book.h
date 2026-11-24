@@ -1,19 +1,20 @@
 #pragma once
 #include <compare>
-#include <cstddef>
-#include <iosfwd>
 #include <string>
 
 class Book {
+private:
+    std::string title_;
+    std::string author_;
+    int year_;
+    int pages_;
+    static std::size_t liveCount_;
 public:
-    // Пустые название/автор и pages == 0 допустимы для эталона ключа.
     Book(std::string title, std::string author, int year, int pages);
     explicit Book(int year);
     Book(const Book& other);
     Book(Book&& other) noexcept;
     ~Book();
-
-    // Ключ записи после создания менять нельзя.
     Book& operator=(const Book&) = delete;
     Book& operator=(Book&&) = delete;
 
@@ -24,16 +25,8 @@ public:
     bool operator==(const Book& other) const noexcept;
     std::strong_ordering operator<=>(const Book& other) const noexcept;
     static std::size_t liveCount() noexcept;
-
-private:
-    std::string title_;
-    std::string author_;
-    int year_;
-    int pages_;
-    static std::size_t liveCount_;
 };
 
-std::ostream& operator<<(std::ostream& out, const Book& book);
 
 class Criterion {
 public:
@@ -42,14 +35,13 @@ public:
 };
 
 class BookSelector final : public Criterion {
-public:
-    BookSelector(int lo, int hi, int minPages);
-    bool matches(const Book& book) const override;
-
 private:
     int lo_;
     int hi_;
     int minPages_;
+public:
+    BookSelector(int lo, int hi, int minPages);
+    bool matches(const Book& book) const override;
 };
 
 class AllBooks final : public Criterion {

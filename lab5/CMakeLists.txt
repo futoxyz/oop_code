@@ -31,7 +31,7 @@ if(ENABLE_ASAN)
 endif()
 
 set(sources book.cpp book_tree.cpp)
-add_executable(main main.cpp ${sources})
+# add_executable(main main.cpp ${sources})
 add_executable(tests tests.cpp ${sources})
 target_link_libraries(tests PRIVATE GTest::gtest_main)
 

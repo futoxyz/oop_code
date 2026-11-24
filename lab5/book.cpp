@@ -34,12 +34,8 @@ bool Book::operator==(const Book& other) const noexcept { return year_ == other.
 std::strong_ordering Book::operator<=>(const Book& other) const noexcept {
     return year_ <=> other.year_;
 }
-std::size_t Book::liveCount() noexcept { return liveCount_; }
 
-std::ostream& operator<<(std::ostream& out, const Book& book) {
-    return out << book.title() << ' ' << book.author() << ' '
-               << book.year() << ' ' << book.pages();
-}
+std::size_t Book::liveCount() noexcept { return liveCount_; }
 
 BookSelector::BookSelector(int lo, int hi, int minPages)
     : lo_(lo), hi_(hi), minPages_(minPages) {

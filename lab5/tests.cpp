@@ -401,24 +401,6 @@ TEST(Selection, move_assignment_replaces_array) {
     expectYears(target, {1965, 1974, 1984});
 }
 
-TEST(Selection, prints_record_or_expired_marker) {
-    BookTree tree;
-    tree.insert(Book("Title", "Author", 2000, 250));
-    const Selection selected = tree.inOrder();
-    std::ostringstream before;
-    before << selected;
-    EXPECT_EQ(before.str(), "1\nTitle Author 2000 250\n");
-
-    ASSERT_TRUE(tree.remove(Book(2000)));
-    std::ostringstream after;
-    after << selected;
-    EXPECT_EQ(after.str(), "1\n[expired]\n");
-
-    std::ostringstream empty;
-    empty << Selection();
-    EXPECT_EQ(empty.str(), "0\n");
-}
-
 TEST(Lifetime, removal_and_destruction_release_records) {
     Selection selected;
     {

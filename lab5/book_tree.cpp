@@ -8,7 +8,6 @@
 
 struct BookTree::Node {
     explicit Node(const Book& value) : book(std::make_shared<Book>(value)) {}
-
     std::shared_ptr<Book> book;
     std::unique_ptr<Node> left;
     std::unique_ptr<Node> right;
@@ -32,7 +31,6 @@ BookTree& BookTree::operator=(BookTree&& other) noexcept {
 }
 
 std::unique_ptr<BookTree::Node>& BookTree::findLink(const Book& key) noexcept {
-    // Идём по владельцам узлов: root_, left или right.
     std::unique_ptr<Node>* link = &root_;
     while (*link && key != *(*link)->book) {
         Node& node = **link;
@@ -69,11 +67,9 @@ bool BookTree::remove(const Book& key) noexcept {
     }
 
     if (!link->left || !link->right) {
-        // Держим узел живым, пока забираем его единственного ребёнка.
         auto removed = std::move(link);
         link = removed->left ? std::move(removed->left) : std::move(removed->right);
     } else {
-        // Преемник — минимум правого поддерева. Сама книга остаётся той же.
         auto* successorLink = &link->right;
         while ((*successorLink)->left) {
             successorLink = &(*successorLink)->left;
@@ -199,16 +195,4 @@ void Selection::swap(Selection& other) noexcept {
     data_.swap(other.data_);
     std::swap(size_, other.size_);
     std::swap(capacity_, other.capacity_);
-}
-
-std::ostream& operator<<(std::ostream& out, const Selection& selection) {
-    out << selection.size() << '\n';
-    for (std::size_t i = 0; i < selection.size(); ++i) {
-        if (const auto book = selection[i].lock()) {
-            out << *book << '\n';
-        } else {
-            out << "[expired]\n";
-        }
-    }
-    return out;
 }
