@@ -12,9 +12,6 @@ struct BookTree::Node {
     std::unique_ptr<Node> right;
 };
 
-BookTree::BookTree() noexcept = default;
-BookTree::~BookTree() = default;
-
 BookTree::BookTree(BookTree&& other) noexcept
     : root_(std::move(other.root_)), size_(other.size_) {
     other.size_ = 0;

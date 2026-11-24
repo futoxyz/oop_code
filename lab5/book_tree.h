@@ -35,8 +35,8 @@ private:
     static void traverse(const Node* node, const Criterion* criterion, bool reverse, Selection& result);
 
 public:
-    BookTree() noexcept;
-    virtual ~BookTree();
+    BookTree() noexcept = default;
+    virtual ~BookTree() = default;
     BookTree(const BookTree&) = delete;
     BookTree& operator=(const BookTree&) = delete;
     BookTree(BookTree&& other) noexcept;
