@@ -9,7 +9,7 @@ public:
     Selection(Selection&& other) noexcept;
     Selection& operator=(const Selection& other);
     Selection& operator=(Selection&& other) noexcept;
-    ~Selection() = default;
+    virtual ~Selection() = default;
 
     std::size_t size() const noexcept;
     std::size_t capacity() const noexcept;
