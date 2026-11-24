@@ -36,7 +36,7 @@ private:
 
 public:
     BookTree() noexcept;
-    ~BookTree();
+    virtual ~BookTree();
     BookTree(const BookTree&) = delete;
     BookTree& operator=(const BookTree&) = delete;
     BookTree(BookTree&& other) noexcept;

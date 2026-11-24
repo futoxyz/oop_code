@@ -1,7 +1,6 @@
 #include "book_tree.h"
 #include <algorithm>
 #include <limits>
-#include <ostream>
 #include <stdexcept>
 #include <utility>
 

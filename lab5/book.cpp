@@ -1,5 +1,4 @@
 #include "book.h"
-#include <ostream>
 #include <stdexcept>
 #include <utility>
 

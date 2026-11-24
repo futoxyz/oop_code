@@ -14,7 +14,7 @@ public:
     explicit Book(int year);
     Book(const Book& other);
     Book(Book&& other) noexcept;
-    ~Book();
+    virtual ~Book();
     Book& operator=(const Book&) = delete;
     Book& operator=(Book&&) = delete;
 
